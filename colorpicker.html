@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Color Picker</title>
+
+    <style>
+    * {
+        margin: 0;
+        padding: 0;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+    } 
+
+ @media only screen and (max-height: 400px) {
+  #canvas {
+    width:100px;
+    height:100px;
+
+  }
+    }
+        
+    main {
+        width: 20vw; 
+        min-width:400px;
+        height:100vh;
+        background-color:black; 
+    }
+    
+    #canvas {
+        border-radius: 50%;
+        border: 1px dashed black; 
+        padding: 10px; 
+        margin: 0 auto; 
+        display: block      
+    }
+
+    #buttons {
+    margin: 0 auto; 
+    margin-bottom: 25px; 
+    text-align: center;
+    }
+
+   #displayColor {
+    font-size: 24px; 
+    text-align: center;
+    color:white;
+    padding:20px;
+   }
+
+   h2{
+       color:white;
+       text-align:center;
+       padding:50px;
+       padding-top:20px;
+   }
+
+    </style>
+
+</head>
+<body>
+
+    
+ <main>  
+        <h2>Random Color Picker</h2>
+
+    <div id="buttons">
+        <input id="start"type="button" value="Start">
+        <input id="stop" type="button" value="Stop">
+    </div>
+
+        <canvas id="canvas" width="250px" height="250px";></canvas>
+
+        <p id="displayColor"></p>
+</main>
+
+<script>
+
+    var notRunning = true;  //prevents double-run bug
+
+
+
+
+    function getRandomColor() {
+
+        var letters = '0123456789ABCDEF'.split('');
+        var color = '#';
+        for (var  i = 0; i < 6; i++) {
+            color += letters [Math.floor(Math.random()*16)];
+        }
+
+        return color;
+    }
+
+    function disco() {
+
+        var canvas = document.getElementById("canvas");
+        var c = canvas.getContext("2d");
+
+        var verticalPos = Math.floor((Math.random()*399 +1));
+        var theColor = getRandomColor();
+
+        c.lineWidth = 400;
+        c.strokeStyle= theColor;
+        c.moveTo( 0.1 ,verticalPos);
+
+        
+        c.lineTo(300,verticalPos);
+        c.lineCap = "butt";
+        c.stroke();
+
+        document.getElementById('displayColor').innerHTML = theColor;
+
+    }
+
+    var animate;
+
+    document.getElementById('start').onclick = function() {
+
+
+    if (notRunning) {
+
+    animate = setInterval(disco, 200);
+    notRunning = false;
+
+    }
+   
+    else {
+        alert("Sorry , already running ! ")
+
+    }
+    }
+  
+   document.getElementById('stop').onclick = function() {
+
+       clearInterval(animate);
+       notRunning = true;
+   }
+
+</script>
+    
+</body>
+</html>
